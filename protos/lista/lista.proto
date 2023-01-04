@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option go_package = "grpc-lista-de-compra/protos/lista";
+
+package lista;
+
+service ListaService {
+  rpc GetAllListas (ListaRequest) returns (stream Lista) {}
+  rpc GetAllListasSync (ListaRequest) returns (Listas) {}
+  rpc RecordLista (stream Lista) returns (Lista) {}
+}
+
+message ListaRequest {}
+
+message Item {
+  int32 id = 1;
+  double value = 2;
+  string name = 3;
+}
+
+message Lista {
+  string name = 1;
+  optional string display_name = 2;
+  int32 version = 3;
+  optional string description = 4;
+  repeated Item items = 5;
+}
+
+message Listas {
+  repeated Lista listas = 1;
+}
